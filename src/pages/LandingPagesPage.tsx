@@ -59,9 +59,9 @@ export default function LandingPagesPage() {
                   </span>
                 </Button>
                 <Button 
-                  variant="outline" 
+                  variant="primary" 
                   size="lg" 
-                  className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 min-w-[200px] transition-all duration-300 hover:border-primary-foreground/40"
+                  className="border border-primary-foreground/20 text-primary-foreground min-w-[200px] transition-all duration-300 hover:bg-primary-foreground/10 hover:border-primary-foreground/40"
                 >
                   Ver documentación
                 </Button>
