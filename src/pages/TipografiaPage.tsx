@@ -28,7 +28,7 @@ export default function TipografiaPage() {
           <span className="w-2 h-2 rounded-full bg-primary" />
           FAMILIA TIPOGRÁFICA
         </h3>
-        <p className="text-5xl font-light text-foreground mb-2">Inter</p>
+        <p className="text-5xl font-light text-foreground mb-2">Montserrat</p>
         <p className="text-muted-foreground text-sm">
           Sans-serif moderna, diseñada para pantallas. Ofrece excelente legibilidad en tamaños pequeños.
         </p>
