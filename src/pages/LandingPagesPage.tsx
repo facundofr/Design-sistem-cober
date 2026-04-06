@@ -734,13 +734,14 @@ export default function LandingPagesPage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/pareja2.webp')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-black/92 via-black/82 to-black/70" />
-        <div className="relative z-10 px-4 sm:px-8 py-12 md:py-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/40 to-black/20" />
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="relative z-10 px-4 sm:px-8 py-12 md:py-20 text-white">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-white/60 text-xs uppercase tracking-widest font-medium mb-3">
+            <p className="text-white/70 text-xs uppercase tracking-widest font-medium mb-3">
               Comenzá hoy
             </p>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4 leading-tight">
               ¿Listo para proteger tu salud y la de tu familia?
             </h2>
             <p className="text-white/70 text-sm md:text-lg mb-8 max-w-xl mx-auto leading-relaxed">
@@ -790,7 +791,7 @@ export default function LandingPagesPage() {
       <footer className="mt-16 border-t border-border pt-10 pb-6">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           <div className="sm:col-span-2 md:col-span-1">
-            <img src="/logo-cober.svg" alt="Cober" className="h-8 w-auto mb-4 dark:invert" />
+            <img src="/logo-cober.svg" alt="Cober" className="h-10 w-auto mb-4" />
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
               Medicina prepaga con foco en la calidad de atención y el bienestar de nuestros socios.
             </p>
@@ -838,7 +839,7 @@ export default function LandingPagesPage() {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-border">
-          <p className="text-xs text-muted-foreground">© 2026 Cober S.A. Todos los derechos reservados. RNOS: 1234/5</p>
+          <p className="text-xs text-muted-foreground">© 2026 Cober Todos los derechos reservados.</p>
           <div className="flex gap-4 text-xs text-muted-foreground">
             <a href="#" className="hover:text-foreground transition-colors">Términos</a>
             <a href="#" className="hover:text-foreground transition-colors">Privacidad</a>
