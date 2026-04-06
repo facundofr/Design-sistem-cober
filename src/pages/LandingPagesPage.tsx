@@ -612,7 +612,6 @@ export default function LandingPagesPage() {
           ))}
         </div>
       </section>
-
       {/* ─── WHY DESIGN SYSTEM SECTION ─── */}
       <section className="mb-12">
         <div className="border border-border rounded-2xl p-6 sm:p-10">
@@ -729,64 +728,7 @@ export default function LandingPagesPage() {
       </section>
 
       {/* ─── FINAL CTA ─── */}
-      <section className="relative rounded-2xl overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/pareja2.webp')" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/40 to-black/20" />
-        <div className="absolute inset-0 bg-black/10" />
-        <div className="relative z-10 px-4 sm:px-8 py-12 md:py-20 text-white">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-white/70 text-xs uppercase tracking-widest font-medium mb-3">
-              Comenzá hoy
-            </p>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-4 leading-tight">
-              ¿Listo para proteger tu salud y la de tu familia?
-            </h2>
-            <p className="text-white/70 text-sm md:text-lg mb-8 max-w-xl mx-auto leading-relaxed">
-              Contactá a un asesor de Cober y encontrá el plan ideal para vos. Sin compromiso y en minutos.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
-              <Button
-                size="lg"
-                className="bg-white text-black hover:bg-white/90 font-bold w-full sm:min-w-[220px] sm:w-auto shadow-2xl"
-              >
-                Cotizar Plan
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 w-full sm:min-w-[220px] sm:w-auto"
-              >
-                Asociate Online
-              </Button>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-white/50">
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                <span>Atención 24/7</span>
-              </div>
-              <div className="hidden sm:block w-1 h-1 rounded-full bg-white/30" />
-              <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                <span>Respuesta en menos de 24hs</span>
-              </div>
-              <div className="hidden sm:block w-1 h-1 rounded-full bg-white/30" />
-              <div className="flex items-center gap-2">
-                <Heart className="w-4 h-4" />
-                <span>30 días de garantía</span>
-              </div>
-              <div className="hidden sm:block w-1 h-1 rounded-full bg-white/30" />
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                <span>Cobertura nacional e internacional</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+     
       {/* ─── FOOTER ─── */}
       <footer className="mt-16 border-t border-border pt-10 pb-6">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
