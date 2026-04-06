@@ -2,7 +2,7 @@ import PageLayout from "@/components/PageLayout";
 import { ColorSwatch } from "@/components/ColorSwatch";
 
 const officialPalette = [
-  { color: "#000000", name: "Negro Institucional", className: "bg-brand-800" },
+  { color: "#660E80", name: "color cober", className: "bg-brand-800" },
   { color: "#262626", name: "Dark Gray", className: "bg-brand-700" },
   { color: "#404040", name: "Medium Gray", className: "bg-brand-500" },
   { color: "#d6d6d6", name: "Light Gray", className: "bg-brand-200", textDark: true },
@@ -18,7 +18,7 @@ const extendedScale = [
   { color: "#666666", name: "Brand 500", className: "bg-brand-500" },
   { color: "#404040", name: "Brand 600", className: "bg-brand-600" },
   { color: "#262626", name: "Brand 700", className: "bg-brand-700" },
-  { color: "#000000", name: "Brand 800", className: "bg-brand-800" },
+  { color: "#660E80", name: "Brand 800", className: "bg-brand-800" },
 ];
 
 const semantics = [
@@ -34,7 +34,7 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          800: '#000000', // Institucional
+          800: '#660E80', // Color Cober (institucional)
           700: '#262626',
           600: '#404040',
           500: '#666666',
@@ -43,6 +43,7 @@ module.exports = {
           200: '#d6d6d6',
           100: '#ededed',
           50:  '#f7f7f7',
+          // primary or accents can be added here
         }
       }
     }

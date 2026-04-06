@@ -1,4 +1,5 @@
 import PageLayout from "@/components/PageLayout";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,13 +9,71 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 import { 
   ArrowRight, Check, Star, ChevronRight,
   Smartphone, Bot, Gift, Shield, Heart, Globe,
-  Phone, Mail, MapPin
+  Phone, Mail, MapPin, Search, FileText, UserCheck
 } from "lucide-react";
 
 export default function LandingPagesPage() {
+  const [api, setApi] = React.useState<CarouselApi | null>(null);
+  const [paused, setPaused] = React.useState(false);
+
+  const imageFiles = [
+    "anchorena.webp",
+    "argus.webp",
+    "bazterrica.webp",
+    "britanico.webp",
+    "cemic.webp",
+    "clinicaimaa.webp",
+    "colegiales.webp",
+    "delaprovidencia.webp",
+    "delbuenpastor.webp",
+    "delsol.webp",
+    "deragopyan.webp",
+    "diagnosticoparque.webp",
+    "gallego.webp",
+    "helguera.webp",
+    "hospital sirio libanes.webp",
+    "iama.webp",
+    "investigacionesmedicas.webp",
+    "itoiz.webp",
+    "maipu.webp",
+    "modelo.webp",
+    "moron.webp",
+    "ninoquilmes.webp",
+    "policlinicolomas.webp",
+    "preventus.webp",
+    "privadafatima.webp",
+    "rossi.webp",
+    "sanjuandedios.webp",
+    "sanpablo.webp",
+    "santaclarazarate.webp",
+    "santaisabel.webp",
+    "torcuato.webp",
+    "trinidad.webp",
+    "trovato.webp",
+    "urquiza.webp",
+    "vilella.webp",
+  ];
+
+  const images = imageFiles.map((f) => new URL(`../prestadoreswebp/${f}`, import.meta.url).href);
+
+  React.useEffect(() => {
+    if (!api) return;
+
+    const id = setInterval(() => {
+      if (paused) return;
+      try {
+        api?.scrollNext();
+      } catch (e) {
+        // ignore
+      }
+    }, 3000);
+
+    return () => clearInterval(id);
+  }, [api, paused]);
   return (
     <PageLayout
       title="Landing Page"
@@ -130,6 +189,57 @@ export default function LandingPagesPage() {
         </div>
       </section>
 
+      {/* ─── STEPS SECTION ─── */}
+      <section className="mb-12">
+        <div className="text-center mb-10">
+          <Badge variant="outline" className="mb-4 text-xs tracking-widest">CÓMO FUNCIONA</Badge>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">
+            Empezá en 3 simples pasos
+          </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto text-sm">
+            El proceso es rápido, simple y 100% online.
+          </p>
+        </div>
+        <div className="relative grid sm:grid-cols-3 gap-6">
+          <div className="hidden sm:block absolute top-[22px] left-[calc(16.66%+28px)] right-[calc(16.66%+28px)] h-px bg-border z-0" />
+          {[
+            {
+              num: "01",
+              icon: Search,
+              title: "Ver planes",
+              desc: "Explorá nuestros planes de salud y encontrá el que mejor se adapte a tus necesidades.",
+            },
+            {
+              num: "02",
+              icon: FileText,
+              title: "Cotizar",
+              desc: "Completá tus datos y obtené tu cotización personalizada al instante.",
+            },
+            {
+              num: "03",
+              icon: UserCheck,
+              title: "Afiliarte",
+              desc: "Confirmá tu plan y completá la afiliación 100% online en minutos.",
+            },
+          ].map((step) => (
+            <div key={step.num} className="flex flex-col items-center text-center relative z-10">
+              <div className="w-11 h-11 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm mb-6 shadow-lg ring-4 ring-background">
+                {step.num}
+              </div>
+              <Card className="w-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <CardContent className="pt-6 pb-6">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4 mx-auto">
+                    <step.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-bold text-foreground mb-2">{step.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ─── ABOUT SECTION ─── */}
       <section className="mb-12">
         <div className="grid md:grid-cols-2 gap-10 items-center">
@@ -171,16 +281,119 @@ export default function LandingPagesPage() {
             <div className="absolute bottom-4 left-4 right-4">
               <div className="bg-white/95 backdrop-blur rounded-xl p-4 flex items-center gap-3 shadow-lg">
                 <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-5 h-5 text-primary-foreground" />
+                  <Shield className="w-5 h-5 text-black" />
                 </div>
-                <div>
-                  <p className="font-bold text-sm text-primary-foreground/70">Cobertura garantizada</p>
-                  <p className="text-primary-foreground/70 ">Desde el primer día de vigencia</p>
+                <div className="text-black">
+                  <p className="font-bold text-sm text-black">Cobertura garantizada</p>
+                  <p className="text-black/70 text-sm">Desde el primer día de vigencia</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ─── PRESTADORES CAROUSEL ─── */}
+      <section className="mb-8">
+        <div className="text-center mb-6">
+          <Badge variant="outline" className="mb-4 text-xs tracking-widest">PRESTADORES</Badge>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">Nuestros prestadores</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto text-sm">Algunos de los prestadores de nuestra cartilla.</p>
+        </div>
+
+        <div className="relative" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+          <Carousel opts={{ align: "start", loop: true, containScroll: 'trimSnaps' }} setApi={setApi} className="w-full">
+            <CarouselContent>
+              {images.map((src, idx) => (
+                <CarouselItem key={idx} className="pl-4 sm:basis-1/2 md:basis-1/3">
+                  <div className="rounded-xl overflow-hidden bg-white h-40 sm:h-56 flex items-center justify-center p-4 shadow-sm">
+                    <img
+                      src={src}
+                      alt={`Prestador ${idx + 1}`}
+                      className="max-h-full max-w-full object-contain grayscale-0"
+                      loading="lazy"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = "/placeholder.svg";
+                      }}
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+      </section>
+
+      {/* ─── CAROUSEL SECTION ─── */}
+      <section className="mb-12">
+        <div className="text-center mb-10">
+          <Badge variant="outline" className="mb-4 text-xs tracking-widest">COBERTURA</Badge>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">
+            Beneficios que hacen la diferencia
+          </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto text-sm">
+            Más que un seguro médico, una experiencia de salud completa.
+          </p>
+        </div>
+        <Carousel opts={{ align: "start", loop: true }} className="w-full">
+          <CarouselContent className="-ml-4">
+            {[
+              {
+                icon: Shield,
+                title: "Cobertura Total",
+                desc: "Guardia, emergencias, consultas, estudios y cirugías incluidas en todos nuestros planes.",
+                tag: "Seguridad",
+              },
+              {
+                icon: Globe,
+                title: "Cobertura Internacional",
+                desc: "Estés donde estés en el mundo, Cober te acompaña con cobertura de emergencias internacionales.",
+                tag: "Alcance",
+              },
+              {
+                icon: Smartphone,
+                title: "Gestión 100% Digital",
+                desc: "Autorizá órdenes, pedí turnos y accedé a tu cartilla desde la app Cober Touch.",
+                tag: "Tecnología",
+              },
+              {
+                icon: Heart,
+                title: "Salud Mental",
+                desc: "Hasta 20 sesiones de psicología por año incluidas en todos los planes.",
+                tag: "Bienestar",
+              },
+              {
+                icon: Gift,
+                title: "Cober Rewards",
+                desc: "Descuentos en gimnasios, farmacias, espectáculos y coworks como socio Cober.",
+                tag: "Beneficios",
+              },
+              {
+                icon: Bot,
+                title: "Atención por IA 24/7",
+                desc: "Cober IA resuelve tus consultas, turnos y autorizaciones sin esperas, todo el día.",
+                tag: "Innovación",
+              },
+            ].map((item) => (
+              <CarouselItem key={item.title} className="pl-4 sm:basis-1/2 md:basis-1/3">
+                <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
+                  <CardContent className="pt-6 pb-6 flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <item.icon className="w-5 h-5 text-primary" />
+                      </div>
+                      <Badge variant="outline" className="text-xs">{item.tag}</Badge>
+                    </div>
+                    <h3 className="font-bold text-foreground mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">{item.desc}</p>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="-left-4" />
+          <CarouselNext className="-right-4" />
+        </Carousel>
       </section>
 
       {/* ─── PLANS SECTION ─── */}
@@ -400,6 +613,67 @@ export default function LandingPagesPage() {
         </div>
       </section>
 
+      {/* ─── WHY DESIGN SYSTEM SECTION ─── */}
+      <section className="mb-12">
+        <div className="border border-border rounded-2xl p-6 sm:p-10">
+          <div className="text-center mb-8">
+            <Badge variant="outline" className="mb-4 text-xs tracking-widest">COMPARACIÓN</Badge>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+              ¿Por qué este Design System?
+            </h2>
+            <p className="text-muted-foreground text-sm">Comparación con soluciones genéricas</p>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="multiple" className="w-full space-y-2">
+              {[
+                {
+                  title: "Componentes diseñados específicamente para casos de uso empresariales",
+                  body: "A diferencia de librerías genéricas, cada componente fue construido pensando en flujos reales de negocio: formularios de cotización, paneles de administración, dashboards de métricas y landing pages de conversión.",
+                },
+                {
+                  title: "Temas y personalizaciones sin límites vía CSS variables",
+                  body: "La arquitectura de tokens CSS permite cambiar colores, tipografías y radios de borde en un solo lugar, propagando los cambios al sistema automáticamente, sin tocar componente por componente.",
+                },
+                {
+                  title: "Documentación completa con ejemplos interactivos y código copiable",
+                  body: "Cada componente incluye ejemplos en contexto real, variantes y snippets listos para usar. Sin tener que buscar en foros ni adivinar props.",
+                },
+                {
+                  title: "Soporte prioritario con SLA garantizado para clientes empresariales",
+                  body: "Nuestro equipo de desarrollo responde tickets en menos de 4 horas hábiles para planes empresariales, con escalamiento directo al equipo de arquitectura.",
+                },
+                {
+                  title: "Actualizaciones semanales con nuevos componentes y mejoras",
+                  body: "Cada semana se publican mejoras de accesibilidad, nuevos patrones de UX y optimizaciones de rendimiento, sin breaking changes gracias a nuestra política de versionado semántico.",
+                },
+                {
+                  title: "Migración asistida desde otros design systems o librerías legacy",
+                  body: "Ofrecemos auditorías de código, mapeo de componentes y guías de migración paso a paso para equipos que necesitan transicionar desde Material UI, Ant Design u otras librerías.",
+                },
+              ].map((item, i) => (
+                <AccordionItem
+                  key={i}
+                  value={`why-${i}`}
+                  className="border border-border rounded-xl px-4 overflow-hidden"
+                >
+                  <AccordionTrigger className="text-left text-sm font-semibold text-foreground hover:no-underline py-4">
+                    <div className="flex items-center gap-3 flex-1 mr-3">
+                      <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                        <Check className="w-3 h-3 text-primary-foreground" />
+                      </div>
+                      <span>{item.title}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4 pl-8">
+                    {item.body}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       {/* ─── FAQ SECTION ─── */}
       <section className="mb-12">
         <div className="text-center mb-10">
@@ -460,7 +734,7 @@ export default function LandingPagesPage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/pareja2.webp')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/75 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/92 via-black/82 to-black/70" />
         <div className="relative z-10 px-4 sm:px-8 py-12 md:py-20">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-white/60 text-xs uppercase tracking-widest font-medium mb-3">
@@ -512,6 +786,66 @@ export default function LandingPagesPage() {
           </div>
         </div>
       </section>
+      {/* ─── FOOTER ─── */}
+      <footer className="mt-16 border-t border-border pt-10 pb-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+          <div className="sm:col-span-2 md:col-span-1">
+            <img src="/logo-cober.svg" alt="Cober" className="h-8 w-auto mb-4 dark:invert" />
+            <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+              Medicina prepaga con foco en la calidad de atención y el bienestar de nuestros socios.
+            </p>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <MapPin className="w-3 h-3 flex-shrink-0" />
+              <span>Buenos Aires, Argentina</span>
+            </div>
+          </div>
+          <div>
+            <h4 className="font-semibold text-foreground text-sm mb-4">Planes</h4>
+            <ul className="space-y-2">
+              {["Classic X", "Taylored", "Wagon", "Planes Familiares"].map((item) => (
+                <li key={item}>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-foreground text-sm mb-4">Compañía</h4>
+            <ul className="space-y-2">
+              {["Sobre Nosotros", "Cober Touch", "Cober IA", "Cober Rewards", "Trabajá con Nosotros"].map((item) => (
+                <li key={item}>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-foreground text-sm mb-4">Contacto</h4>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Phone className="w-4 h-4 flex-shrink-0" />
+                <span>0800-666-0000</span>
+              </li>
+              <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Mail className="w-4 h-4 flex-shrink-0" />
+                <span>info@cober.com.ar</span>
+              </li>
+              <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Globe className="w-4 h-4 flex-shrink-0" />
+                <span>www.cober.com.ar</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-border">
+          <p className="text-xs text-muted-foreground">© 2026 Cober S.A. Todos los derechos reservados. RNOS: 1234/5</p>
+          <div className="flex gap-4 text-xs text-muted-foreground">
+            <a href="#" className="hover:text-foreground transition-colors">Términos</a>
+            <a href="#" className="hover:text-foreground transition-colors">Privacidad</a>
+            <a href="#" className="hover:text-foreground transition-colors">Cookies</a>
+          </div>
+        </div>
+      </footer>
     </PageLayout>
   );
 }

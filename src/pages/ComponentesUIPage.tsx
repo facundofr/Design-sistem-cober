@@ -1,6 +1,19 @@
+import * as React from "react";
+import { format } from "date-fns";
+import { ChevronDownIcon } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardAction,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -14,9 +27,18 @@ import {
   AlertDescription,
   AlertTitle,
 } from "@/components/ui/alert";
-import { AlertCircle, CheckCircle, Info } from "lucide-react";
+import { AlertCircle, Info, Star } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { LoginForm } from "@/components/login-form";
 
 export default function ComponentesUIPage() {
+  const [date, setDate] = React.useState<Date>();
+
   return (
     <PageLayout
       title="Componentes UI"
@@ -33,6 +55,7 @@ export default function ComponentesUIPage() {
           <Badge variant="secondary">Secondary</Badge>
           <Badge variant="destructive">Destructive</Badge>
           <Badge variant="outline">Outline</Badge>
+          <Badge variant="ghost">Ghost</Badge>
         </div>
       </section>
 
@@ -86,6 +109,30 @@ export default function ComponentesUIPage() {
             </CardContent>
           </Card>
         </div>
+      </section>
+
+      {/* Carousel */}
+      <section className="mb-8">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Carousel</h3>
+        <Carousel opts={{ align: "start", loop: true }} className="w-full">
+          <CarouselContent className="-ml-4">
+            {[1, 2, 3].map((i) => (
+              <CarouselItem key={i} className="pl-4 sm:basis-1/2 md:basis-1/3">
+                <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
+                  <CardContent className="pt-6 pb-6 flex flex-col h-full">
+                    <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center mb-4">
+                      <Star className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <h3 className="font-bold text-foreground mb-2">Slide {i}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">Contenido de ejemplo para el slide {i}.</p>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="-left-4" />
+          <CarouselNext className="-right-4" />
+        </Carousel>
       </section>
 
       {/* Tabs */}
@@ -149,6 +196,69 @@ export default function ComponentesUIPage() {
             <AlertDescription>Algo salió mal. Intente nuevamente.</AlertDescription>
           </Alert>
         </div>
+      </section>
+
+      {/* Card Login */}
+      <section className="mb-8">
+        <h3 className="text-lg font-semibold text-foreground mb-4 mt-10">Card Login</h3>
+        <div className="flex justify-center">
+          <div className="w-full max-w-sm">
+            <LoginForm />
+          </div>
+        </div>
+      </section>
+
+      {/* Card con imagen */}
+      <section className="mb-8">
+        <h3 className="text-lg font-semibold text-foreground mb-4 mt-10">Card con imagen</h3>
+        <div className="flex justify-center">
+          <Card className="relative mx-auto w-full max-w-sm pt-0 overflow-hidden">
+            <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
+            <img
+              src="https://avatar.vercel.sh/shadcn1"
+              alt="Event cover"
+              className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
+            />
+            <CardHeader>
+              <CardAction>
+                <Badge variant="secondary">Featured</Badge>
+              </CardAction>
+              <CardTitle>Design systems meetup</CardTitle>
+              <CardDescription>
+                A practical talk on component APIs, accessibility, and shipping
+                faster.
+              </CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <Button className="w-full">View Event</Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </section>
+
+      {/* Date Picker */}
+      <section className="mb-8">
+        <h3 className="text-lg font-semibold text-foreground mb-4 mt-10">Date Picker</h3>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              data-empty={!date}
+              className="w-[212px] justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
+            >
+              {date ? format(date, "PPP") : <span>Pick a date</span>}
+              <ChevronDownIcon />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              defaultMonth={date}
+            />
+          </PopoverContent>
+        </Popover>
       </section>
     </PageLayout>
   );
