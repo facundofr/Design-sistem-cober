@@ -109,63 +109,49 @@ const gridClass = "grid gap-x-6 gap-y-3 sm:gap-x-6 sm:gap-y-3 grid-cols-1 sm:gri
 function Page1() {
   return (
     <div className={gridClass}>
-      {/* Design System */}
-      <div><NovaMontserratCard /></div>
-      <div><TypographyShowcaseCard /></div>
-      <div><ButtonGroupToolbarCard /></div>
-      <div><EnvironmentVariablesCard /></div>
-
-      {/* UI Base */}
-      <div><ButtonShowcaseCard /></div>
-      <div><BadgeShowcaseCard /></div>
-      <div><InputShowcaseCard /></div>
-      <div><AvatarShowcaseCard /></div>
-
-      {/* Formularios */}
-      <div><FormElementsCard /></div>
-      <div><FeedbackCard /></div>
-      <div><ReportBugCard /></div>
-      <div><BookAppointmentCard /></div>
-
-      {/* Formularios extendidos */}
-      <div><ShippingAddressCard /></div>
-      <div><TabsCard /></div>
-      <div><NavigationMenuCard /></div>
-      <div><BreadcrumbCard /></div>
-
-      {/* Notificaciones */}
-      <div><NotificationsCard /></div>
-      <div><NotificationsPreferencesCard /></div>
-      <div><ShortcutsCard /></div>
-      <div><GetAlertedCard /></div>
-
-      {/* Media y archivos */}
-      <div><FileUploadCard /></div>
-      <div><UploadArtworkCard /></div>
-      <div><LiveAudioWaveformCard /></div>
-      <div><QRCodeCard /></div>
-
-      {/* Perfil y cuenta */}
-      <div><ProfileCard /></div>
-      <div><PreferencesCard /></div>
-      <div><SocialLinksCard /></div>
-      <div><MilestoneCard /></div>
-
-      {/* Equipos y colaboración */}
-      <div><InviteTeamCard /></div>
-      <div><NoTeamMembersCard /></div>
-      <div><ContributorsCard /></div>
-      <div><ExploreCatalogCard /></div>
-
-      {/* Dev y observabilidad */}
+      {/* Large — Priority rows */}
+      <div><RecentTransactionsFullCard /></div>
+      <div><TrafficChannelsCard /></div>
+      <div><HoldingsListCard /></div>
       <div><VercelAgentCard /></div>
+      <div><InviteTeamCard /></div>
+      <div><SavingsTargetsFullCard /></div>
       <div><ObservabilityCard /></div>
-      <div><ContributionsActivityCard /></div>
-      <div><NoCodespacesCard /></div>
+      <div><TransferFundsFullCard /></div>
 
-      {/* FAQ y misc */}
-      <div><FAQCard /></div>
-      <div><NotFoundCard /></div>
+      {/* Large / Medium */}
+      <div><CardBalanceCard /></div>
+      <div><BrowserShareCard /></div>
+      <div><StockPerformanceCard /></div>
+      <div><AnalyticsCard /></div>
+
+      {/* Medium — Financial & Activity */}
+      <div><VisitorsCard /></div>
+      <div><SleepReportCard /></div>
+      <div><YearlyActivityCard /></div>
+      <div><InvestmentCard /></div>
+      <div><BuyInvestmentCard /></div>
+      <div><DividendIncomeCard /></div>
+      <div><DollarCostAveragingCard /></div>
+
+      {/* Savings */}
+      <div><SavingsGoalDonutCard /></div>
+      <div><SavingsTargetCard /></div>
+      <div><NewSavingsGoalCard /></div>
+
+      {/* Transactions & Billing */}
+      <div><RecentTransactionsCard /></div>
+      <div><UpcomingPaymentsCard /></div>
+      <div><InvoiceCard /></div>
+      <div><BillingCycleCard /></div>
+      <div><PaymentDueCard /></div>
+
+      {/* Transfers & Banking */}
+      <div><TransferFundsCard /></div>
+      <div><ConnectBankCard /></div>
+      <div><AccountAccessCard /></div>
+      <div><PayoutPreferencesCard /></div>
+      <div><SyncingAccountsCard /></div>
     </div>
   );
 }
@@ -173,57 +159,56 @@ function Page1() {
 function Page2() {
   return (
     <div className={gridClass}>
-      {/* Analytics */}
-      <div><TrafficChannelsCard /></div>
-      <div><VisitorsCard /></div>
-      <div><AnalyticsCard /></div>
-      <div><BrowserShareCard /></div>
+      {/* Small / UI & Forms */}
+      <div><ButtonShowcaseCard /></div>
+      <div><BadgeShowcaseCard /></div>
+      <div><InputShowcaseCard /></div>
+      <div><AvatarShowcaseCard /></div>
 
-      {/* Performance y salud */}
-      <div><StockPerformanceCard /></div>
-      <div><YearlyActivityCard /></div>
-      <div><SleepReportCard /></div>
-      <div><WeeklyFitnessCard /></div>
+      <div><FormElementsCard /></div>
+      <div><TabsCard /></div>
+      <div><ButtonGroupToolbarCard /></div>
+      <div><TypographyShowcaseCard /></div>
 
-      {/* Balance y facturación */}
-      <div><CardBalanceCard /></div>
-      <div><PaymentDueCard /></div>
-      <div><BillingCycleCard /></div>
-      <div><InvoiceCard /></div>
+      <div><NovaMontserratCard /></div>
+      <div><EnvironmentVariablesCard /></div>
+      <div><FileUploadCard /></div>
+      <div><UploadArtworkCard /></div>
 
-      {/* Inversiones */}
-      <div><InvestmentCard /></div>
-      <div><BuyInvestmentCard /></div>
-      <div><DividendIncomeCard /></div>
-      <div><DollarCostAveragingCard /></div>
+      <div><LiveAudioWaveformCard /></div>
+      <div><QRCodeCard /></div>
+      <div><NavigationMenuCard /></div>
+      <div><BreadcrumbCard /></div>
 
-      {/* Ahorros */}
-      <div><SavingsGoalDonutCard /></div>
-      <div><SavingsTargetCard /></div>
-      <div><SavingsTargetsFullCard /></div>
-      <div><NewSavingsGoalCard /></div>
+      <div><FeedbackCard /></div>
+      <div><ReportBugCard /></div>
+      <div><BookAppointmentCard /></div>
+      <div><ShippingAddressCard /></div>
 
-      {/* Transacciones */}
-      <div><RecentTransactionsCard /></div>
-      <div><RecentTransactionsFullCard /></div>
-      <div><UpcomingPaymentsCard /></div>
-      <div><HoldingsListCard /></div>
+      <div><PreferencesCard /></div>
+      <div><ProfileCard /></div>
+      <div><SocialLinksCard /></div>
+      <div><MilestoneCard /></div>
 
-      {/* Transferencias y banking */}
-      <div><TransferFundsCard /></div>
-      <div><TransferFundsFullCard /></div>
-      <div><ConnectBankCard /></div>
-      <div><AccountAccessCard /></div>
+      <div><ExploreCatalogCard /></div>
+      <div><ContributorsCard /></div>
+      <div><NoTeamMembersCard /></div>
+      <div><ShortcutsCard /></div>
 
-      {/* Cuenta y sincronización */}
-      <div><PayoutPreferencesCard /></div>
-      <div><SyncingAccountsCard /></div>
+      <div><NotificationsCard /></div>
+      <div><NotificationsPreferencesCard /></div>
+      <div><FAQCard /></div>
+      <div><NotFoundCard /></div>
 
-      {/* Hogar / IoT */}
+      {/* IoT / small layout pieces */}
       <div><PowerUsageCard /></div>
       <div><KitchenIslandCard /></div>
       <div><LivingRoomCard /></div>
       <div><SmartLockCard /></div>
+
+      <div><NoCodespacesCard /></div>
+      <div><ContributionsActivityCard /></div>
+      <div><GetAlertedCard /></div>
     </div>
   );
 }
