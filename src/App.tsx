@@ -12,6 +12,7 @@ import ComponentesUIPage from "./pages/ComponentesUIPage";
 import TablasPage from "./pages/TablasPage";
 import LayoutsPage from "./pages/LayoutsPage";
 import LandingPagesPage from "./pages/LandingPagesPage";
+import TodosComponentesPage from "./pages/TodosComponentesPage";
 import AdminPage from "./pages/AdminPage";
 import NotFound from "./pages/NotFound";
 
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/tablas" element={<TablasPage />} />
             <Route path="/layouts" element={<LayoutsPage />} />
             <Route path="/landing-pages" element={<LandingPagesPage />} />
+            <Route path="/todos-los-componentes" element={<TodosComponentesPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

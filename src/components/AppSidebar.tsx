@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Palette, Type, MousePointerClick, FormInput, Component, Table, Layout, Globe, LogIn, ChevronLeft, ChevronRight } from "lucide-react";
+import { Palette, Type, MousePointerClick, FormInput, Component, Table, Layout, Globe, LogIn, ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./ui/mode-toggle";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -22,6 +22,7 @@ const sections = [
       { to: "/tablas", icon: Table, label: "Tablas" },
       { to: "/layouts", icon: Layout, label: "Layouts" },
       { to: "/landing-pages", icon: Globe, label: "Landing Pages" },
+      { to: "/todos-los-componentes", icon: LayoutGrid, label: "Todos los Componentes" },
     ],
   },
 ];
