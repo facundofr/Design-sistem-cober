@@ -1,9 +1,16 @@
-import { NavLink, useLocation } from "react-router-dom";
-import { Palette, Type, MousePointerClick, FormInput, Component, Table, Layout, Globe, LogIn, ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { Palette, Type, MousePointerClick, FormInput, Component, Table, Layout, Globe, ChevronLeft, ChevronRight, LayoutGrid, ChevronDown, Check, Building2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./ui/mode-toggle";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { useBrand, type Brand } from "./brand-provider";
 
 const sections = [
   {
@@ -32,17 +39,49 @@ interface AppSidebarProps {
   onToggle: () => void;
 }
 
-export default function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
-  const location = useLocation();
-  const isMobile = useIsMobile();
+const brands: { value: Brand; label: string }[] = [
+  { value: "cober", label: "Cober" },
+  { value: "bristol", label: "Bristol" },
+];
 
-  // Cerrar el sidebar cuando cambia la ruta en mobile
+function BrandSwitcher() {
+  const { brand, setBrand } = useBrand();
+  const current = brands.find((b) => b.value === brand)!;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="flex w-full items-center gap-3 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
+          <Building2 className="w-4 h-4 shrink-0" />
+          <span className="flex-1 text-left font-medium">{current.label}</span>
+          <ChevronDown className="w-3.5 h-3.5 text-sidebar-muted" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-40">
+        {brands.map((b) => (
+          <DropdownMenuItem
+            key={b.value}
+            onClick={() => setBrand(b.value)}
+            className="flex items-center justify-between"
+          >
+            {b.label}
+            {brand === b.value && <Check className="w-3.5 h-3.5 ml-2" />}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+export default function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
+  const isMobile = useIsMobile();
+  const { config } = useBrand();
+
+  // Stable logo: only re-assign when brand actually changes, prevents flicker on navigation
+  const [logoSrc, setLogoSrc] = useState(config.logoSrc);
   useEffect(() => {
-    if (isMobile && isOpen) {
-      onToggle();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+    setLogoSrc(config.logoSrc);
+  }, [config.brand]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -54,66 +93,11 @@ export default function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
         {/* Logo y botón hamburguesa */}
         <div className="p-5 flex items-center gap-3 justify-between border-b border-sidebar-border">
           <div className="flex items-center gap-3">
-            <svg
-              viewBox="0 0 584 265"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              xmlSpace="preserve"
-              aria-hidden="true"
-              fill="currentColor"
-                className="w-32 h-32 rounded-lg fill-current text-sidebar-primary dark:text-white object-contain"
-            >
-              <g>
-                <g>
-                  <path d="M404.2,136.8l-2.1-15.2l-7,15.2H393l-7-15.2l-2,15.2h-7.4l4-26.4h7.3l6.2,14.3l6.2-14.3h7.3l3.9,26.4H404.2z" />
-                  <path d="M431.9,130.5v6.3h-17.2v-26.4h16.9v6.3H422v3.9h8.7v6H422v3.9H431.9z" />
-                  <path d="M460,123.5c0,7.7-5.6,13.2-13.6,13.2h-10.7v-26.4h10.7C454.4,110.4,460,115.8,460,123.5z M452.5,123.5 c0-3.9-2.6-6.5-6.5-6.5h-3v13.1h3C449.9,130.1,452.5,127.4,452.5,123.5z" />
-                  <path d="M463.4,110.4h7.4v26.4h-7.4V110.4z" />
-                  <path d="M488.1,137.4c-8,0-14-5.9-14-13.8c0-7.9,6-13.9,14-13.9c6.9,0,12.3,4.6,13.3,11.2h-7.4 c-0.9-2.7-3.2-4.5-6-4.5c-3.7,0-6.5,3-6.5,7.1c0,4.1,2.7,7,6.5,7c2.9,0,5.2-1.9,6-4.8h7.4C500.5,132.7,495.1,137.4,488.1,137.4 L488.1,137.4z" />
-                  <path d="M504.6,110.4h7.4v26.4h-7.4V110.4z" />
-                  <path d="M540.2,110.4v26.4h-6l-10.5-14.3v14.3h-7v-26.4h6.4l10.1,13.8v-13.8H540.2z" />
-                  <path d="M561,132.5h-9.3l-1.5,4.3h-7.8l10.4-26.4h7.1l10.6,26.4h-8L561,132.5z M556.3,118.6l-2.9,8.2h5.8L556.3,118.6 z" />
-                  <path d="M399.1,150.9c0,5.5-4.2,9.6-9.8,9.6h-3.9v7.3h-7.3v-26.4h11.2C395,141.3,399.1,145.3,399.1,150.9z M391.7,150.9 c0-1.9-1.3-3.2-3.2-3.2h-3.1v6.4h3.1C390.4,154.1,391.7,152.8,391.7,150.9z" />
-                  <path d="M411.9,159.6h-2.6v8.1H402v-26.4h11.4c5.7,0,9.8,3.8,9.8,9.3c0,3.2-1.6,5.9-4.2,7.4l5.2,9.6h-8.1L411.9,159.6 z M409.3,153.5h3.3c2,0,3.2-1.2,3.2-2.9c0-1.6-1.2-2.9-3.2-2.9h-3.3V153.5z" />
-                  <path d="M427.1,141.3h7.4v26.4h-7.4V141.3z" />
-                  <path d="M463.8,141.3l-10.1,26.4H447l-10.3-26.4h8.3l5.4,16.4l5.2-16.4H463.8z" />
-                  <path d="M479.2,163.4h-9.3l-1.5,4.3h-7.8l10.4-26.4h7.1l10.6,26.4h-8L479.2,163.4z M474.5,149.6l-2.9,8.2h5.8 L474.5,149.6z" />
-                  <path d="M515,154.5c0,7.7-5.6,13.2-13.6,13.2h-10.7v-26.4h10.7C509.4,141.3,515,146.8,515,154.5z M507.6,154.5 c0-3.9-2.6-6.5-6.5-6.5h-3V161h3C505,161,507.6,158.4,507.6,154.5z" />
-                  <path d="M533.2,163.4h-9.3l-1.5,4.3h-7.8l10.4-26.4h7.1l10.6,26.4h-8L533.2,163.4z M528.5,149.6l-2.9,8.2h5.8 L528.5,149.6z" />
-                </g>
-                <g>
-                  <g>
-                    <path d="M177.2,126.3c-1-1.8-2.3-3.5-3.8-4.9c-1.5-1.5-3.1-2.7-4.9-3.8c-1.8-1-3.7-1.9-5.8-2.4 c-4.1-1.2-8.8-1.1-12.9,0c-2.1,0.6-4,1.4-5.8,2.4c-1.8,1-3.4,2.3-4.9,3.8c-1.5,1.5-2.7,3.1-3.8,4.9c-1,1.8-1.9,3.7-2.4,5.8 c-0.6,2-0.9,4.2-0.9,6.4c0,0.4,0,0.7,0,1.1l0,0.3l-0.1,0.2c-3.4,6.2-6.6,8.7-10.5,10.7l-0.3,0.1c-1.3,0.5-2.9,1.1-6,1.1h-0.1 c-1.8,0-3.6-0.4-5.2-1.1c-1.6-0.7-3-1.7-4.1-2.9c-1.2-1.2-2.1-2.7-2.7-4.3c-0.6-1.6-1-3.4-1-5.3c0-1.9,0.3-3.7,1-5.3 c0.6-1.7,1.5-3.1,2.7-4.4c1.2-1.2,2.5-2.2,4.1-2.9c1.6-0.7,3.4-1.1,5.2-1.1c1.5,0,3,0.2,4.3,0.7c1.4,0.5,2.6,1.1,3.7,2 c0.2,0.1,0.4,0.1,0.4,0.1c0,0,0.1,0,0.3-0.3l5.5-7.8c0.1-0.2,0.1-0.4,0.1-0.5c-0.1-0.2-0.3-0.4-0.5-0.5c-2-1.3-4.2-2.4-6.4-3.1 c-2.2-0.7-4.6-1.1-7.2-1.1c-2.2,0-4.4,0.3-6.4,0.9c-2.1,0.6-4,1.4-5.8,2.4c-1.8,1-3.4,2.3-4.9,3.8c-1.5,1.5-2.7,3.1-3.8,4.9 c-1.1,1.8-1.9,3.7-2.4,5.8c-0.6,2.1-0.9,4.2-0.9,6.4c0,2.2,0.3,4.4,0.9,6.4c0.6,2.1,1.4,4,2.4,5.8c1,1.8,2.3,3.4,3.8,4.9 c1.5,1.5,3.1,2.7,4.9,3.8c1.8,1.1,3.7,1.9,5.8,2.4c2,0.6,4.2,0.9,6.4,0.9c2.5,0,5-0.4,7.2-1.1c1.2-0.4,2.4-0.9,3.6-1.5 c4.4-2.2,6.7-4.9,8.9-7.8l0.6-0.9l0.6,0.9c0.8,1.2,1.8,2.3,2.8,3.3c1.5,1.5,3.1,2.7,4.9,3.8c1.8,1.1,3.7,1.9,5.8,2.4 c4.1,1.1,8.8,1.1,12.9,0c2.1-0.6,4-1.4,5.8-2.4c1.8-1.1,3.4-2.3,4.9-3.8c1.5-1.5,2.7-3.1,3.8-4.9c1-1.8,1.9-3.7,2.4-5.8 c0.6-2,0.9-4.2,0.9-6.4c0-2.2-0.3-4.4-0.9-6.4C179.1,130,178.3,128.1,177.2,126.3 M168.4,143.8c-0.6,1.7-1.6,3.1-2.7,4.3 c-1.2,1.2-2.6,2.2-4.2,2.9c-1.6,0.7-3.4,1.1-5.3,1.1c-1.9,0-3.7-0.4-5.3-1.1c-1.6-0.7-3-1.7-4.1-2.9c-1.2-1.2-2.1-2.7-2.7-4.3 c-0.6-1.6-1-3.4-1-5.3c0-1.9,0.3-3.7,1-5.3c0.6-1.7,1.6-3.1,2.7-4.4c1.2-1.2,2.6-2.2,4.1-2.9c1.6-0.7,3.4-1.1,5.3-1.1 c1.9,0,3.7,0.4,5.3,1.1c1.6,0.7,3,1.7,4.2,2.9c1.2,1.2,2.1,2.7,2.7,4.4c0.6,1.7,1,3.4,1,5.3C169.4,140.4,169.1,142.2,168.4,143.8" />
-                  </g>
-                  <g>
-                    <path d="M218,137.2l-0.5-0.5l0.5-0.6c0.9-1,1.6-2.2,2-3.5c0.5-1.3,0.7-2.8,0.7-4.3c0-1.9-0.4-3.6-1-5.2 c-0.7-1.6-1.7-3-2.9-4.2c-1.2-1.2-2.6-2.2-4.2-2.8c-1.6-0.7-3.3-1-5.1-1h-21.7c-0.4,0-0.5,0.1-0.5,0.2c0,0-0.2,0.2-0.2,0.6v45.6 c0,0.1,0,0.4,0.1,0.5c0.1,0.1,0.3,0.1,0.5,0.1h23.6c1.8,0,3.5-0.4,5.2-1.1c1.6-0.7,3.1-1.8,4.3-3c1.2-1.3,2.2-2.8,2.9-4.4 c0.7-1.7,1.1-3.5,1.1-5.3c0-2.1-0.4-4.1-1.3-6C220.7,140.2,219.5,138.6,218,137.2 M196.2,123.1h7.8c0.8,0,1.6,0.1,2.3,0.4 c0.7,0.3,1.3,0.7,1.8,1.2c0.5,0.5,0.9,1.1,1.2,1.7c0.3,0.7,0.4,1.4,0.4,2.1c0,0.8-0.1,1.5-0.4,2.2c-0.3,0.7-0.7,1.3-1.2,1.7 c-0.5,0.5-1.1,0.9-1.9,1.1c-0.7,0.3-1.5,0.4-2.3,0.4h-7.7V123.1z M211,149.9c-0.3,0.7-0.7,1.4-1.2,2c-0.5,0.6-1.1,1.1-1.8,1.4 c-0.7,0.4-1.5,0.5-2.3,0.5h-9.4v-12.4h9.4c0.8,0,1.6,0.2,2.4,0.6c0.7,0.4,1.3,0.8,1.8,1.4c0.5,0.6,0.9,1.2,1.2,2 c0.3,0.7,0.4,1.5,0.4,2.2C211.5,148.4,211.3,149.1,211,149.9" />
-                  </g>
-                  <g>
-                    <path d="M305.6,159.8l-8.7-16.4l0.6-0.4c1.1-0.6,2.2-1.4,3.1-2.3c0.9-0.9,1.8-1.9,2.4-3c0.7-1.1,1.2-2.3,1.6-3.6 c0.4-1.3,0.6-2.6,0.6-4c0-2.1-0.4-4-1.2-5.9c-0.8-1.8-1.9-3.4-3.3-4.8c-1.4-1.4-3-2.5-4.9-3.3c-1.9-0.8-3.9-1.2-6-1.2h-21.1 c-0.2,0-0.4,0.1-0.5,0.1c0,0-0.2,0.2-0.2,0.6v36.6h-29.4v-9.9h17.1c0.3,0,0.4-0.1,0.5-0.2c0.2-0.2,0.2-0.3,0.2-0.4v-7.1 c0-0.1,0-0.3-0.1-0.4c-0.1-0.1-0.3-0.2-0.6-0.2h-17.1v-9.6h21.9c0.3,0,0.5-0.1,0.5-0.2c0.2-0.2,0.2-0.4,0.2-0.6v-8.1 c0-0.3-0.1-0.5-0.2-0.6c-0.1-0.1-0.2-0.2-0.5-0.2h-32.4c-0.3,0-0.4,0.1-0.5,0.2c0,0-0.2,0.2-0.2,0.6v45.6c0,0.1,0,0.4,0.1,0.5 c0.1,0.1,0.3,0.1,0.5,0.1h50.2c0.7,0,0.7-0.2,0.7-0.6l0-27l0,0v-10.9h5.3c0.6,0,1.2,0,1.8,0.1c0.5,0,1.1,0.1,1.7,0.1 c0.9,0.1,1.7,0.4,2.4,0.8c0.7,0.4,1.3,0.9,1.8,1.5c0.5,0.6,0.9,1.3,1.1,2c0.3,0.7,0.4,1.5,0.4,2.2c0,0.8-0.1,1.5-0.4,2.3 c-0.2,0.7-0.6,1.4-1.1,2c-0.5,0.6-1.1,1.1-1.7,1.5c-0.7,0.4-1.5,0.7-2.4,0.8c-0.4,0-0.7,0.1-1,0.1c-0.3,0-0.7,0-1.1,0h-4 c-0.1,0-0.3,0.1-0.3,0.2c-0.1,0.1,0,0.4,0.1,0.7l4.9,9.7l7.3,13.8c0,0.2,0.1,0.3,0.3,0.4c0.2,0.1,0.3,0.2,0.5,0.2h11.2 c0.1,0,0.3,0,0.5-0.1c0,0,0.1-0.1,0.1-0.2c0-0.1,0-0.3-0.3-0.7C305.9,160.5,305.7,160.2,305.6,159.8" />
-                  </g>
-                  <g>
-                    <path d="M45.3,138.5V174c0,4.9,2.5,9.4,6.6,12l25.2,13.3v-28.5c0-4.2-2.5-7.9-6.3-9.6c-4.1-1.8-7-2.9-10.8-4.8 C46.6,149.7,45.3,138.5,45.3,138.5" />
-                  </g>
-                  <g>
-                    <path d="M45.3,138.2V95.8c0-5.8,3-11.2,7.9-14.3l30-15.8v33.9c0,5-3,9.5-7.5,11.5c-4.9,2.2-8.4,3.4-12.9,5.7 C46.9,124.9,45.3,138.2,45.3,138.2" />
-                  </g>
-                  <g>
-                    <path d="M35.5,139v19c0,2.6-1.3,5-3.5,6.4l-13.5,7.1v-15.2c0-2.2,1.3-4.2,3.4-5.2c2.2-1,3.7-1.5,5.8-2.6 C34.8,145,35.5,139,35.5,139" />
-                  </g>
-                  <g>
-                    <path d="M35.5,137.1v-26.7c0-3.7-1.9-7.1-5-9l-19-10v21.4c0,3.1,1.9,6,4.7,7.3c3.1,1.4,5.3,2.2,8.1,3.6 C34.5,128.7,35.5,137.1,35.5,137.1" />
-                  </g>
-                </g>
-                <g>
-                  <g>
-                    <rect x="342.5" y="102.7" width="2.6" height="70" />
-                  </g>
-                </g>
-              </g>
-            </svg>
-            <div>
-              <h1 className="text-sm font-bold text-sidebar-primary leading-none">Design System</h1>
-            </div>
+            <img
+              src={logoSrc}
+              alt={config.label}
+              className="h-12 w-auto object-contain brightness-0 dark:invert transition-transform duration-200"
+            />
           </div>
           <Button
             variant="ghost"
@@ -134,24 +118,23 @@ export default function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
               {section.label}
             </p>
             <ul className="space-y-0.5">
-              {section.items.map((item) => {
-                const isActive = location.pathname === item.to;
-                return (
-                  <li key={item.to}>
-                    <NavLink
-                      to={item.to}
-                      className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+              {section.items.map((item) => (
+                <li key={item.to}>
+                  <NavLink
+                    to={item.to}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
                         isActive
                           ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                           : "text-sidebar-foreground hover:bg-sidebar-accent/50"
-                      }`}
-                    >
-                      <item.icon className="w-4 h-4" />
-                      {item.label}
-                    </NavLink>
-                  </li>
-                );
-              })}
+                      }`
+                    }
+                  >
+                    <item.icon className="w-4 h-4" />
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
         ))}
@@ -163,13 +146,7 @@ export default function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
           <span className="text-xs text-sidebar-muted">Tema</span>
           <ModeToggle />
         </div>
-        <NavLink
-          to="/admin"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
-        >
-          <LogIn className="w-4 h-4" />
-          Acceso Admin
-        </NavLink>
+        <BrandSwitcher />
       </div>
     </aside>
 

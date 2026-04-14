@@ -15,50 +15,16 @@ import {
   Smartphone, Bot, Gift, Shield, Heart, Globe,
   Phone, Mail, MapPin, Search, FileText, UserCheck
 } from "lucide-react";
+import { useBrand } from "@/components/brand-provider";
 
 export default function LandingPagesPage() {
+  const { config } = useBrand();
   const [api, setApi] = React.useState<CarouselApi | null>(null);
   const [paused, setPaused] = React.useState(false);
 
-  const imageFiles = [
-    "anchorena.webp",
-    "argus.webp",
-    "bazterrica.webp",
-    "britanico.webp",
-    "cemic.webp",
-    "clinicaimaa.webp",
-    "colegiales.webp",
-    "delaprovidencia.webp",
-    "delbuenpastor.webp",
-    "delsol.webp",
-    "deragopyan.webp",
-    "diagnosticoparque.webp",
-    "gallego.webp",
-    "helguera.webp",
-    "hospital sirio libanes.webp",
-    "iama.webp",
-    "investigacionesmedicas.webp",
-    "itoiz.webp",
-    "maipu.webp",
-    "modelo.webp",
-    "moron.webp",
-    "ninoquilmes.webp",
-    "policlinicolomas.webp",
-    "preventus.webp",
-    "privadafatima.webp",
-    "rossi.webp",
-    "sanjuandedios.webp",
-    "sanpablo.webp",
-    "santaclarazarate.webp",
-    "santaisabel.webp",
-    "torcuato.webp",
-    "trinidad.webp",
-    "trovato.webp",
-    "urquiza.webp",
-    "vilella.webp",
-  ];
-
-  const images = imageFiles.map((f) => new URL(`../prestadoreswebp/${f}`, import.meta.url).href);
+  const images = config.prestadoresFiles.map(
+    (f) => new URL(`../prestadoreswebp/${f}`, import.meta.url).href
+  );
 
   React.useEffect(() => {
     if (!api) return;
@@ -84,7 +50,7 @@ export default function LandingPagesPage() {
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/pareja2.webp')" }}
+          style={{ backgroundImage: `url('${config.heroBgImage}')` }}
         />
         {/* Dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/50" />
@@ -94,7 +60,11 @@ export default function LandingPagesPage() {
             {/* Left: Text */}
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <img src="/logo-cober.svg" alt="Cober" className="h-8 brightness-0 invert" />
+                <img
+                  src={config.logoSrc}
+                  alt={config.label}
+                  className="h-12 w-auto object-contain brightness-0 invert transition-transform duration-200"
+                />
               </div>
               <p className="text-white/70 text-sm font-medium tracking-widest uppercase mb-3">
                 Medicina Privada
@@ -108,7 +78,7 @@ export default function LandingPagesPage() {
                 en tu Plan de Medicina Prepaga
               </p>
               <p className="text-white/70 text-base leading-relaxed max-w-md">
-                En Cober unimos innovación y experiencia para que acceder a la salud sea más simple, cercano y confiable.
+                En {config.label} unimos innovación y experiencia para que acceder a la salud sea más simple, cercano y confiable.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mt-8">
                 <Button size="lg" className="bg-white text-black hover:bg-white/90 font-semibold px-8 w-full sm:w-auto">
@@ -124,7 +94,7 @@ export default function LandingPagesPage() {
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-6 md:p-8">
               <h2 className="text-white font-bold text-xl mb-1">Completá el formulario</h2>
               <p className="text-white/60 text-sm mb-6">y te contactamos</p>
-              <div className="space-y-4">
+                <div className="space-y-4">
                 <div>
                   <label className="text-white/80 text-xs font-medium mb-1 block">Nombre completo</label>
                   <input
@@ -153,9 +123,9 @@ export default function LandingPagesPage() {
                   <label className="text-white/80 text-xs font-medium mb-1 block">Plan de interés</label>
                   <select className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-white/50 transition-all appearance-none cursor-pointer">
                     <option value="" className="text-black">Seleccioná un plan</option>
-                    <option value="classic" className="text-black">Classic X</option>
-                    <option value="taylored" className="text-black">Taylored</option>
-                    <option value="wagon" className="text-black">Wagon</option>
+                    {config.plans.map((p) => (
+                      <option key={p.name} value={p.name} className="text-black">{p.name}</option>
+                    ))}
                   </select>
                 </div>
                 <Button className="w-full bg-white text-black hover:bg-white/90 font-bold text-base py-3 h-auto mt-2">
@@ -246,16 +216,16 @@ export default function LandingPagesPage() {
           <div>
             <Badge variant="outline" className="mb-4 text-xs tracking-widest">SOBRE NOSOTROS</Badge>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
-              Cober, Tu Medicina Prepaga
+              {config.label}, Tu Medicina Prepaga
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              En Cober unimos innovación y experiencia para que acceder a la salud sea más simple, cercano y confiable. Somos una medicina prepaga con foco en la calidad de atención y el bienestar de nuestros socios.
+              En {config.label} unimos innovación y experiencia para que acceder a la salud sea más simple, cercano y confiable. Somos una medicina prepaga con foco en la calidad de atención y el bienestar de nuestros socios.
             </p>
             <ul className="space-y-3">
               {[
                 "Cartilla médica con más de 300 prestadores",
-                "Atención personalizada y asa esores especializados",
-                "Gestión 100% digital a través de Cober Touch",
+                "Atención personalizada y asesores especializados",
+                `Gestión 100% digital a través de ${config.label} Touch`,
                 "Cobertura nacional e internacional",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-foreground">
@@ -267,14 +237,14 @@ export default function LandingPagesPage() {
               ))}
             </ul>
             <Button className="mt-8" size="lg">
-              Conocé más sobre Cober
+              Conocé más sobre {config.label}
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
           <div className="relative rounded-2xl overflow-hidden aspect-video md:aspect-[4/3]">
             <img
-              src="/pareja2.webp"
-              alt="Familia Cober"
+              src={config.heroBgImage}
+              alt={`Familia ${config.label}`}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -347,13 +317,13 @@ export default function LandingPagesPage() {
               {
                 icon: Globe,
                 title: "Cobertura Internacional",
-                desc: "Estés donde estés en el mundo, Cober te acompaña con cobertura de emergencias internacionales.",
+                desc: `Estés donde estés en el mundo, ${config.label} te acompaña con cobertura de emergencias internacionales.`,
                 tag: "Alcance",
               },
               {
                 icon: Smartphone,
                 title: "Gestión 100% Digital",
-                desc: "Autorizá órdenes, pedí turnos y accedé a tu cartilla desde la app Cober Touch.",
+                desc: `Autorizá órdenes, pedí turnos y accedé a tu cartilla desde la app ${config.label} Touch.`,
                 tag: "Tecnología",
               },
               {
@@ -364,14 +334,14 @@ export default function LandingPagesPage() {
               },
               {
                 icon: Gift,
-                title: "Cober Rewards",
-                desc: "Descuentos en gimnasios, farmacias, espectáculos y coworks como socio Cober.",
+                title: `${config.label} Rewards`,
+                desc: `Descuentos en gimnasios, farmacias, espectáculos y coworks como socio ${config.label}.`,
                 tag: "Beneficios",
               },
               {
                 icon: Bot,
                 title: "Atención por IA 24/7",
-                desc: "Cober IA resuelve tus consultas, turnos y autorizaciones sin esperas, todo el día.",
+                desc: `${config.label} IA resuelve tus consultas, turnos y autorizaciones sin esperas, todo el día.`,
                 tag: "Innovación",
               },
             ].map((item) => (
@@ -404,58 +374,12 @@ export default function LandingPagesPage() {
             Elegí el Plan que te impulsa
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-sm">
-            Encontrá la cobertura que mejor se adapte a vos. En Cober pensamos cada plan para impulsar tu bienestar.
+            Encontrá la cobertura que mejor se adapte a vos. En {config.label} pensamos cada plan para impulsar tu bienestar.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {[
-            {
-              name: "Classic X",
-              subtitle: "Un plan superador.",
-              price: "$121.456",
-              featured: false,
-              features: [
-                "Guardia y emergencias las 24hs",
-                "Consultas online",
-                "20 sesiones de psicología",
-                "40% OFF en farmacias",
-                "50% OFF en gimnasios",
-                "Cobertura nacional",
-              ],
-            },
-            {
-              name: "Taylored",
-              subtitle: "Cartilla superadora a tu disposición.",
-              price: "$157.893",
-              featured: true,
-              badge: "MÁS VENDIDO",
-              features: [
-                "Guardia y emergencias las 24hs",
-                "Consultas online",
-                "20 sesiones de psicología",
-                "Un par de anteojos por año",
-                "40% OFF en farmacias",
-                "50% OFF en gimnasios",
-                "Cobertura nacional e internacional",
-              ],
-            },
-            {
-              name: "Wagon",
-              subtitle: "Cartilla médica premium 24/7.",
-              price: "$205.262",
-              featured: false,
-              features: [
-                "Guardia y emergencias las 24hs",
-                "Consultas online",
-                "20 sesiones de psicología",
-                "Un par de anteojos por año",
-                "40% OFF en farmacias",
-                "50% OFF en gimnasios",
-                "Cobertura nacional e internacional",
-              ],
-            },
-          ].map((plan) => (
+          {config.plans.map((plan) => (
             <Card
               key={plan.name}
               className={`relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
@@ -506,7 +430,7 @@ export default function LandingPagesPage() {
             Lo que dicen Nuestros Socios
           </h2>
           <p className="text-muted-foreground text-sm">
-            Miles de familias confían en Cober para su salud y bienestar.
+            Miles de familias confían en {config.label} para su salud y bienestar.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -522,7 +446,7 @@ export default function LandingPagesPage() {
               plan: "Plan Matrimonio",
             },
             {
-              quote: "Acceso rápido a especialistas, turnos sin demoras y una red de clínicas increíble. Cober superó todas mis expectativas.",
+              quote: `Acceso rápido a especialistas, turnos sin demoras y una red de clínicas increíble. ${config.label} superó todas mis expectativas.`,
               author: "Ana Rodríguez",
               plan: "Plan Familiar + 2 hijos",
             },
@@ -560,28 +484,28 @@ export default function LandingPagesPage() {
             Innovamos para estar más cerca tuyo.
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-sm">
-            En Cober transformamos la forma de vivir tu cobertura médica con soluciones simples y beneficios que suman valor real.
+            En {config.label} transformamos la forma de vivir tu cobertura médica con soluciones simples y beneficios que suman valor real.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           {[
             {
               icon: Smartphone,
-              name: "Cober Touch",
+                name: `${config.label} Touch`,
               subtitle: "App Móvil",
               desc: "La APP Móvil diseñada para gestionar tu cobertura de manera digital, de forma rápida y sencilla.",
               features: ["Credencial Digital", "Autorizaciones", "Cartilla", "Turnos online"],
             },
             {
               icon: Bot,
-              name: "Cober IA",
+                name: `${config.label} IA`,
               subtitle: "Inteligencia Artificial",
               desc: "El primer ChatBot de IA para que gestiones tu cobertura de manera integral 24/7.",
               features: ["Solicitá Turnos", "Consultá tu Cartilla", "Autorizá tus Órdenes", "Gestión 24/7"],
             },
             {
               icon: Gift,
-              name: "Cober Rewards",
+                name: `${config.label} Rewards`,
               subtitle: "Programa de beneficios",
               desc: "Un programa de beneficios pensado para vos: salud, movimiento y disfrute, todo en uno.",
               features: ["Descuentos en Gimnasios", "Descuentos Espectáculos", "Descuentos en Coworks", "Beneficios exclusivos"],
@@ -680,33 +604,33 @@ export default function LandingPagesPage() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">
             Preguntas Frecuentes
           </h2>
-          <p className="text-muted-foreground text-sm">Todo lo que necesitás saber sobre Cober.</p>
+          <p className="text-muted-foreground text-sm">Todo lo que necesitás saber sobre {config.label}.</p>
         </div>
         <div className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="w-full space-y-2">
             {[
               {
                 q: "¿Qué es la medicina prepaga y en qué se diferencia de una obra social?",
-                a: "La medicina prepaga es un servicio de cobertura de salud privado que se contrata de forma voluntaria. A diferencia de una obra social, que se asigna por tu actividad laboral o monotributo, con una prepaga como Cober tenés la libertad de elegir el plan que mejor se adapte a tus necesidades, accediendo a una cartilla médica más amplia y servicios diferenciales.",
+                a: `La medicina prepaga es un servicio de cobertura de salud privado que se contrata de forma voluntaria. A diferencia de una obra social, que se asigna por tu actividad laboral o monotributo, con una prepaga como ${config.label} tenés la libertad de elegir el plan que mejor se adapte a tus necesidades, accediendo a una cartilla médica más amplia y servicios diferenciales.`,
               },
               {
                 q: "¿Cómo hago para asociarme?",
                 a: "Completá el formulario en nuestra web y un asesor se pondrá en contacto para ayudarte a elegir el plan de salud que mejor se adapte a tus necesidades y presupuesto.",
               },
               {
-                q: "¿Por qué debería elegir Cober como mi cobertura de salud?",
-                a: "En Cober nos destacamos por ofrecer una excelente relación precio-calidad, con una amplia cartilla de profesionales y sanatorios de primer nivel en todo el país. Priorizamos la atención personalizada y la agilidad en las gestiones para que cuidar tu salud sea más simple.",
+                q: `¿Por qué debería elegir ${config.label} como mi cobertura de salud?`,
+                a: `En ${config.label} nos destacamos por ofrecer una excelente relación precio-calidad, con una amplia cartilla de profesionales y sanatorios de primer nivel en todo el país. Priorizamos la atención personalizada y la agilidad en las gestiones para que cuidar tu salud sea más simple.`,
               },
               {
-                q: "¿Puedo pasarme de mi obra social a Cober?",
-                a: "¡Claro que sí! Podés derivar tus aportes de la obra social para pagar una parte o la totalidad de la cuota de tu plan en Cober. Nuestro equipo de asesores te guiará en todo el proceso de traspaso.",
+                q: `¿Puedo pasarme de mi obra social a ${config.label}?`,
+                a: `¡Claro que sí! Podés derivar tus aportes de la obra social para pagar una parte o la totalidad de la cuota de tu plan en ${config.label}. Nuestro equipo de asesores te guiará en todo el proceso de traspaso.`,
               },
               {
-                q: "Soy monotributista/autónomo, ¿puedo contratar Cober?",
+                q: `Soy monotributista/autónomo, ¿puedo contratar ${config.label}?`,
                 a: "Por supuesto. Ofrecemos planes especialmente pensados para monotributistas y trabajadores autónomos. Si sos monotributista, podés utilizar tus aportes mensuales para acceder a nuestros servicios.",
               },
               {
-                q: "¿Cober ofrece atención médica online o telemedicina?",
+                q: `¿${config.label} ofrece atención médica online o telemedicina?`,
                 a: "Sí. A través de nuestra plataforma digital podés acceder a consultas médicas online con profesionales de distintas especialidades, sin necesidad de trasladarte. Las videoconsultas están disponibles 24/7 y se pueden realizar desde tu celular o computadora.",
               },
             ].map((item, i) => (
@@ -733,7 +657,11 @@ export default function LandingPagesPage() {
       <footer className="mt-16 border-t border-border pt-10 pb-6">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           <div className="sm:col-span-2 md:col-span-1">
-            <img src="/logo-cober.svg" alt="Cober" className="h-10 w-auto mb-4" />
+            <img
+              src={config.logoSrc}
+              alt={config.label}
+              className="h-12 w-auto object-contain mb-4 dark:brightness-0 dark:invert transition-transform duration-200"
+            />
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
               Medicina prepaga con foco en la calidad de atención y el bienestar de nuestros socios.
             </p>
@@ -745,9 +673,9 @@ export default function LandingPagesPage() {
           <div>
             <h4 className="font-semibold text-foreground text-sm mb-4">Planes</h4>
             <ul className="space-y-2">
-              {["Classic X", "Taylored", "Wagon", "Planes Familiares"].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item}</a>
+              {config.plans.map((p) => (
+                <li key={p.name}>
+                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{p.name}</a>
                 </li>
               ))}
             </ul>
@@ -755,7 +683,13 @@ export default function LandingPagesPage() {
           <div>
             <h4 className="font-semibold text-foreground text-sm mb-4">Compañía</h4>
             <ul className="space-y-2">
-              {["Sobre Nosotros", "Cober Touch", "Cober IA", "Cober Rewards", "Trabajá con Nosotros"].map((item) => (
+              {[
+                "Sobre Nosotros",
+                `${config.label} Touch`,
+                `${config.label} IA`,
+                `${config.label} Rewards`,
+                "Trabajá con Nosotros",
+              ].map((item) => (
                 <li key={item}>
                   <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item}</a>
                 </li>
@@ -771,17 +705,17 @@ export default function LandingPagesPage() {
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="w-4 h-4 flex-shrink-0" />
-                <span>info@cober.com.ar</span>
+                <span>{`info@${config.label.toLowerCase()}.com.ar`}</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Globe className="w-4 h-4 flex-shrink-0" />
-                <span>www.cober.com.ar</span>
+                <span>{`www.${config.label.toLowerCase()}.com.ar`}</span>
               </li>
             </ul>
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-border">
-          <p className="text-xs text-muted-foreground">© 2026 Cober Todos los derechos reservados.</p>
+          <p className="text-xs text-muted-foreground">© 2026 {config.label} Todos los derechos reservados.</p>
           <div className="flex gap-4 text-xs text-muted-foreground">
             <a href="#" className="hover:text-foreground transition-colors">Términos</a>
             <a href="#" className="hover:text-foreground transition-colors">Privacidad</a>

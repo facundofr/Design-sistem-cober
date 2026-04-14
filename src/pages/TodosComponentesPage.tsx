@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import AppSidebar from "@/components/AppSidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useBrand } from "@/components/brand-provider";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
@@ -79,30 +80,6 @@ import {
   SavingsTargetsFullCard,
   RecentTransactionsFullCard,
 } from "@/components/showcase/ShowcaseCards";
-
-// CSS variables: fondo neutro negro de la app + violet en --primary
-const violetDarkVars: React.CSSProperties = {
-  "--background": "0 0% 7%",
-  "--foreground": "0 0% 98%",
-  "--card": "0 0% 10%",
-  "--card-foreground": "0 0% 98%",
-  "--popover": "0 0% 7%",
-  "--popover-foreground": "0 0% 98%",
-  "--primary": "263.4 70% 50.4%",
-  "--primary-foreground": "0 0% 98%",
-  "--secondary": "0 0% 15%",
-  "--secondary-foreground": "0 0% 98%",
-  "--muted": "0 0% 15%",
-  "--muted-foreground": "0 0% 65%",
-  "--accent": "0 0% 15%",
-  "--accent-foreground": "0 0% 98%",
-  "--destructive": "0 84% 60%",
-  "--destructive-foreground": "0 0% 98%",
-  "--border": "0 0% 20%",
-  "--input": "0 0% 20%",
-  "--ring": "263.4 70% 50.4%",
-  "--radius": "1.5rem",
-} as React.CSSProperties;
 
 const gridClass = "grid gap-x-6 gap-y-3 sm:gap-x-6 sm:gap-y-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-start";
 
@@ -217,6 +194,7 @@ export default function TodosComponentesPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [page, setPage] = useState(1);
   const isMobile = useIsMobile();
+  const { brand } = useBrand();
   const totalPages = 2;
 
   const handleToggle = useCallback(() => {
@@ -235,21 +213,14 @@ export default function TodosComponentesPage() {
       )}
 
       <main
-        className={`flex-1 w-full min-w-0 transition-all duration-300 ${
+        className={`flex-1 w-full min-w-0 transition-all duration-300 bg-background text-foreground ${brand === "cober" ? "violet-primary" : ""} ${
           isSidebarOpen && !isMobile ? "ml-60" : "ml-0"
         }`}
-        style={{
-          ...violetDarkVars,
-          backgroundColor: "hsl(0, 0%, 7%)",
-          color: "hsl(0, 0%, 98%)",
-          fontFamily: "'Montserrat', sans-serif",
-          minHeight: "100vh",
-        }}
       >
         <div className="px-6 py-4">
           {/* Header */}
           <div className="mb-2 md:mb-4">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: "hsl(0, 0%, 98%)" }}>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-1 text-foreground">
               Todos los Componentes
             </h1>
         
@@ -257,8 +228,8 @@ export default function TodosComponentesPage() {
 
           {/* Paginación — top */}
           <div className="flex items-center justify-between mb-2">
-            <p className="text-sm" style={{ color: "hsl(0, 0%, 65%)" }}>
-              Página <span className="font-bold" style={{ color: "hsl(0, 0%, 98%)" }}>{page}</span> de {totalPages}
+            <p className="text-sm text-muted-foreground">
+              Página <span className="font-bold text-foreground">{page}</span> de {totalPages}
             </p>
             <div className="flex items-center gap-2">
               <Button

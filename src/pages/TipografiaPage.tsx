@@ -1,4 +1,5 @@
 import PageLayout from "@/components/PageLayout";
+import { useBrand } from "@/components/brand-provider";
 
 const headings = [
   { tag: "H1", size: "text-4xl", weight: "font-bold", label: "Heading 1", example: "Título Principal" },
@@ -17,10 +18,11 @@ const bodyStyles = [
 ];
 
 export default function TipografiaPage() {
+  const { config } = useBrand();
   return (
     <PageLayout
       title="Tipografía"
-      description="Sistema tipográfico basado en Inter. Escala definida para jerarquía clara y lectura óptima."
+      description={`Sistema tipográfico basado en ${config.fontFamily}. Escala definida para jerarquía clara y lectura óptima.`}
     >
       {/* Font Family */}
       <section className="border border-border rounded-xl p-6 mb-8">
@@ -28,9 +30,9 @@ export default function TipografiaPage() {
           <span className="w-2 h-2 rounded-full bg-primary" />
           FAMILIA TIPOGRÁFICA
         </h3>
-        <p className="text-5xl font-light text-foreground mb-2">Montserrat</p>
+        <p className="text-5xl font-light text-foreground mb-2">{config.fontFamily}</p>
         <p className="text-muted-foreground text-sm">
-          Sans-serif moderna, diseñada para pantallas. Ofrece excelente legibilidad en tamaños pequeños.
+          {config.fontDescription}
         </p>
         <div className="mt-4 flex flex-wrap gap-4">
           {["font-light", "font-normal", "font-medium", "font-semibold", "font-bold", "font-extrabold"].map((w) => (

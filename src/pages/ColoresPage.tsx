@@ -1,8 +1,8 @@
 import PageLayout from "@/components/PageLayout";
 import { ColorSwatch } from "@/components/ColorSwatch";
+import { useBrand } from "@/components/brand-provider";
 
-const officialPalette = [
-  { color: "#660E80", name: "color cober", className: "bg-brand-800" },
+const greySwatches = [
   { color: "#262626", name: "Dark Gray", className: "bg-brand-700" },
   { color: "#404040", name: "Medium Gray", className: "bg-brand-500" },
   { color: "#d6d6d6", name: "Light Gray", className: "bg-brand-200", textDark: true },
@@ -18,7 +18,6 @@ const extendedScale = [
   { color: "#666666", name: "Brand 500", className: "bg-brand-500" },
   { color: "#404040", name: "Brand 600", className: "bg-brand-600" },
   { color: "#262626", name: "Brand 700", className: "bg-brand-700" },
-  { color: "#660E80", name: "Brand 800", className: "bg-brand-800" },
 ];
 
 const semantics = [
@@ -28,13 +27,21 @@ const semantics = [
   { color: "#3b82f6", name: "Info", className: "bg-info" },
 ];
 
-const codeSnippet = `// tailwind.config.ts
+export default function ColoresPage() {
+  const { config } = useBrand();
+
+  const officialPalette = [
+    { color: config.primaryColorHex, name: config.primaryColorName, className: "bg-brand-800" },
+    ...greySwatches,
+  ];
+
+  const codeSnippet = `// tailwind.config.ts — ${config.label}
 module.exports = {
   theme: {
     extend: {
       colors: {
         brand: {
-          800: '#660E80', // Color Cober (institucional)
+          800: '${config.primaryColorHex}', // ${config.primaryColorName}
           700: '#262626',
           600: '#404040',
           500: '#666666',
@@ -43,14 +50,17 @@ module.exports = {
           200: '#d6d6d6',
           100: '#ededed',
           50:  '#f7f7f7',
-          // primary or accents can be added here
         }
       }
     }
   }
 }`;
 
-export default function ColoresPage() {
+  const brandScale = [
+    ...extendedScale,
+    { color: config.primaryColorHex, name: "Brand 800", className: "bg-brand-800" },
+  ];
+
   return (
     <PageLayout
       title="Colores Institucionales"
@@ -76,7 +86,7 @@ export default function ColoresPage() {
           Variaciones generadas para estados de interacción (hover, active, focus).
         </p>
         <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-3">
-          {extendedScale.map((c) => (
+          {brandScale.map((c) => (
             <ColorSwatch key={c.className} {...c} />
           ))}
         </div>

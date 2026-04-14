@@ -118,6 +118,35 @@
   }
 }
 
+/* Violet primary override — scoped to todos-los-componentes (Cober brand) */
+.violet-primary {
+  --primary: 263.4 70% 50.4%;
+  --primary-foreground: 0 0% 98%;
+  --ring: 263.4 70% 50.4%;
+}
+
+/* ── Bristol brand — primary verde #07682f ──────────────────── */
+.brand-bristol {
+  --primary: 145 87% 22%;
+  --primary-foreground: 0 0% 98%;
+  --ring: 145 87% 22%;
+  --brand-800: 145 87% 22%;
+}
+
+/* Bristol en dark mode: aclarar un poco para contraste */
+.dark.brand-bristol {
+  --primary: 145 60% 38%;
+  --primary-foreground: 0 0% 98%;
+  --ring: 145 60% 38%;
+  --brand-800: 145 60% 38%;
+}
+
+/* Bristol font override */
+.brand-bristol body,
+.brand-bristol * {
+  font-family: 'Inter', sans-serif !important;
+}
+
 @layer base {
   * {
     @apply border-border;
